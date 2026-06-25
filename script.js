@@ -51,9 +51,14 @@ function renderPalette() {
         const colorText = document.createElement('p');
         colorText.textContent = hexColor;
 
+        // Creamos el texto que mostrará el código HSL
+        const colorTextHSL = document.createElement('p');
+        colorTextHSL.textContent = hexToHSL(hexColor);
+
 
         // Insertamos el texto en la tarjeta, y la tarjeta en el contenedor principal
         colorCard.appendChild(colorText);
+        colorCard.appendChild(colorTextHSL);
         paletteContainer.appendChild(colorCard);
     }
 
@@ -66,4 +71,55 @@ function renderPalette() {
 // =========================================
 // Ejecutamos la función principal al hacer clic en el botón
 generateBtn.addEventListener('click', renderPalette);
+
+// =========================================
+// 6. Convertir HEX a HSL
+// =========================================
+// Ejecutamos la función para generar la conversion a HSL
+function hexToHSL(hex) {
+    // Eliminar #
+    hex = hex.replace('#', '');
+
+    // Convertir HEX a RGB
+    let r = parseInt(hex.substring(0, 2), 16) / 255;
+    let g = parseInt(hex.substring(2, 4), 16) / 255;
+    let b = parseInt(hex.substring(4, 6), 16) / 255;
+
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+
+    let h, s, l;
+    l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        let d = max - min;
+
+        s = l > 0.5
+            ? d / (2 - max - min)
+            : d / (max + min);
+
+        switch (max) {
+            case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / d + 2;
+                break;
+            case b:
+                h = (r - g) / d + 4;
+                break;
+        }
+
+        h /= 6;
+    }
+
+    h = Math.round(h * 360);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
+
+    return `hsl(${h}, ${s}%, ${l}%)`;
+}
+
 
