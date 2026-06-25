@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Paletas de Colores</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    
+    <header>
+        <h1>COLORFLY STUDIO</h1>
+        <p>Genera combinaciones de colores únicas con un solo clic</p>
+    </header>
+
+
+    <main>
+        <section class="controls-section">
+            <div class="control-group">
+                <label id="size-label" for="palette-size">Tamaño de la paleta:</label>
+                <select id="palette-size" aria-labelledby="size-label">
+                    <option value="6">6 Colores</option>
+                    <option value="8">8 Colores</option>
+                    <option value="9" selected>9 Colores</option>
+                </select>
+            </div>
+
+            <button id="generate-btn" class="primary-btn">Generar paleta</button>
+        </section>
+
+        <section id="palette-container" class="palette-grid" aria-live="polite">
+            </section>
+    </main>
+
+    <div id="toast" class="toast" role="alert" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

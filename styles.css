@@ -1,0 +1,153 @@
+/* =========================================
+   Variables de color para buen contraste 
+   ========================================= */
+:root {
+    --bg-color: #f4f4f9;
+    --text-color: #1a1a1a;
+    --btn-bg: #2563eb;
+    --btn-text: #ffffff;
+    --btn-hover: #1d4ed8;
+}
+
+/* =========================================
+   Estilos base y consistentes
+   ========================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 2rem;
+}
+
+header {
+    margin-bottom: 2rem;
+}
+
+/* =========================================
+   Layout con Flexbox (Controles)
+   ========================================= */
+.controls-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Botón accesible y con buen contraste */
+.primary-btn {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+/* FOCO VISIBLE: Obligatorio para accesibilidad */
+.primary-btn:focus, select:focus {
+    outline: 3px solid #ff9900;
+    outline-offset: 2px;
+}
+
+/* =========================================
+   Layout con Grid (Grilla de colores)
+   ========================================= */
+.palette-grid {
+    display: grid;
+    /* Esto hace que la grilla se adapte sola al tamaño de pantalla */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Estilos de las tarjetas de color que creará JS */
+.color-card {
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.color-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Etiqueta del código HEX dentro de la tarjeta */
+.color-card p {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #000;
+    margin: 0;
+}/* =========================================
+   Microfeedback (Toast)
+   ========================================= */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333333;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+}
+
+/* Esta clase es la que JS agrega y quita dinámicamente */
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
