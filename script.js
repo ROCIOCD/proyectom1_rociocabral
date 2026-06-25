@@ -105,8 +105,6 @@ function renderPalette() {
     // Guardamos los colores bloqueados en el localStorage para que persistan entre sesiones
     localStorage.setItem('lockedColors', JSON.stringify(lockedColors));
 
-
-
     // Disparamos el microfeedback
     showToast('¡Paleta generada!');
 }
@@ -188,16 +186,37 @@ window.addEventListener('load', () => {
     paletteContainer.innerHTML = '';
 
     // Recorremos la paleta guardada y creamos las tarjetas correspondientes
-    savedPalette.forEach(hexColor => {
+    savedPalette.forEach((hexColor, index) => {
         const colorCard = document.createElement('div');
         colorCard.classList.add('color-card');
         colorCard.style.backgroundColor = hexColor;
+
+         // Botón de bloqueo
+        const lockButton = document.createElement('button');
+        lockButton.classList.add('lock-btn');
+        lockButton.textContent = lockedColors[index] ? '🔒' : '🔓';
+
+        lockButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+
+            lockedColors[index] = !lockedColors[index];
+
+            lockButton.textContent =
+                lockedColors[index] ? '🔒' : '🔓';
+
+            localStorage.setItem(
+                'lockedColors',
+                JSON.stringify(lockedColors)
+            );
+        });
 
         const colorText = document.createElement('p');
         colorText.textContent = hexColor;
 
         const colorTextHSL = document.createElement('p');
         colorTextHSL.textContent = hexToHSL(hexColor);
+
+        colorCard.appendChild(lockButton);
 
         colorCard.appendChild(colorText);
         colorCard.appendChild(colorTextHSL);
