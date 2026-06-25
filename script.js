@@ -37,10 +37,14 @@ function renderPalette() {
 
     // Leemos el tamaño seleccionado en el input (6, 8 o 9)
     const size = parseInt(paletteSizeSelect.value);
+    // Creamos un array para almacenar los colores generados
+    const palette = [];
 
     // Creamos la cantidad de tarjetas solicitadas
     for (let i = 0; i < size; i++) {
         const hexColor = generateRandomHex();
+        // Guardamos el color en el array de la paleta
+        palette.push(hexColor);
 
         // Creamos el contenedor de la tarjeta
         const colorCard = document.createElement('div');
@@ -61,6 +65,9 @@ function renderPalette() {
         colorCard.appendChild(colorTextHSL);
         paletteContainer.appendChild(colorCard);
     }
+
+    // Guardamos la paleta en el localStorage para que persista entre sesiones
+    localStorage.setItem('lastPalette', JSON.stringify(palette));
 
     // Disparamos el microfeedback
     showToast('¡Paleta generada!');
@@ -121,5 +128,41 @@ function hexToHSL(hex) {
 
     return `hsl(${h}, ${s}%, ${l}%)`;
 }
+
+
+// =========================================
+// 7. Recuperar la última paleta generada al cargar la página
+// =========================================
+// Si hay una paleta guardada en el localStorage, la recuperamos y la renderizamos
+window.addEventListener('load', () => {
+    //Buscamos la paleta guardada en el localStorage
+    const savedPalette = JSON.parse(localStorage.getItem('lastPalette'));
+
+    // Si no hay paleta guardada, salimos de la función
+    if (!savedPalette) {
+        return;
+    }
+
+    // Limpiamos el contenedor por si hay colores de una generación anterior
+    paletteContainer.innerHTML = '';
+
+    // Recorremos la paleta guardada y creamos las tarjetas correspondientes
+    savedPalette.forEach(hexColor => {
+        const colorCard = document.createElement('div');
+        colorCard.classList.add('color-card');
+        colorCard.style.backgroundColor = hexColor;
+
+        const colorText = document.createElement('p');
+        colorText.textContent = hexColor;
+
+        const colorTextHSL = document.createElement('p');
+        colorTextHSL.textContent = hexToHSL(hexColor);
+
+        colorCard.appendChild(colorText);
+        colorCard.appendChild(colorTextHSL);
+
+        paletteContainer.appendChild(colorCard);
+    });
+});
 
 
