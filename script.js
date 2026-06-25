@@ -64,6 +64,13 @@ function renderPalette() {
         colorCard.appendChild(colorText);
         colorCard.appendChild(colorTextHSL);
         paletteContainer.appendChild(colorCard);
+
+        // Click para copiar el color HEX al portapapeles
+        colorCard.addEventListener('click', () => {
+            navigator.clipboard.writeText(hexColor);
+            showToast("Copiado: " + hexColor);
+        });
+
     }
 
     // Guardamos la paleta en el localStorage para que persista entre sesiones
@@ -162,6 +169,14 @@ window.addEventListener('load', () => {
         colorCard.appendChild(colorTextHSL);
 
         paletteContainer.appendChild(colorCard);
+
+        // Agregamos el evento de click para copiar el color al portapapeles
+        // Ya que no funciona si la paleta se carga desde el localStorage, lo agregamos aquí también
+        colorCard.addEventListener('click', () => {
+            navigator.clipboard.writeText(hexColor);
+            showToast("Copiado: " + hexColor);
+        });
+
     });
 
     //Seleccionar la cantidad de colores en el select según la paleta guardada
