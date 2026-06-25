@@ -163,6 +163,12 @@ window.addEventListener('load', () => {
 
         paletteContainer.appendChild(colorCard);
     });
+
+    //Seleccionar la cantidad de colores en el select según la paleta guardada
+    if (savedPalette) {
+        paletteSizeSelect.value = savedPalette.length;
+    }
 });
+
 
 
